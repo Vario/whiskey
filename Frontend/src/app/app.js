@@ -18,13 +18,14 @@ angular.module('whiskey.webapp',
     'ui.router',
     'whiskey.services',
     'whiskey.auth',
+    'whiskey.user',
     'whiskey.dashboard',
-    'whiskey.navigation',
     'whiskey.whiskey',
     'whiskey.loading'])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider) {
       $urlRouterProvider.otherwise('/404') // fallback url
+      $locationProvider.hashPrefix(''); // remove ! in url
       $stateProvider
         .state('login', {
           url: '/login',
@@ -34,7 +35,7 @@ angular.module('whiskey.webapp',
         })
         .state('register', {
           url: '/register',
-          // template: '<h1>login.register<h1>'
+          // template: '<h1>login.register<h1>',
           templateUrl: 'app/modules/auth/register.html',
           controller: 'LoginController'
         })
@@ -45,34 +46,12 @@ angular.module('whiskey.webapp',
           controller: 'DashboardController'
         })
         .state('dashboard.taste', {
-          url: '/taste',
-          views: {
-            'navigation': {
-              // template: '<h1>navigation</h1>'
-              templateUrl: '/app/modules/navigation/navigation.html',
-              controller: 'NavigationController'
-            },
-            'content': {
-              // template: '<h1>whiskeycontent</h1>'
-              templateUrl: '/app/modules/whiskey/list.html'
-            // controller: 'WhiskeyController'
-            }
-          }
+          url: '/dashboard/taste',
+          templateUrl: '/app/modules/whiskey/list.html'
         })
         .state('dashboard.user', {
-          url: '/user',
-          views: {
-            'navigation': {
-              // template: '<h1>navigation</h1>'
-              templateUrl: '/app/modules/navigation/navigation.html',
-              controller: 'NavigationController'
-            },
-            'content': {
-              template: '<h1>user content</h1>',
-            // templateUrl: '/app/modules/whiskey/list.html',
-            // controller: 'UserController'
-            }
-          }
+          url: '/dashboard/user',
+          templateUrl: '/app/modules/user/user.html'
         })
 
         .state('404', {
@@ -82,7 +61,17 @@ angular.module('whiskey.webapp',
     }])
   .controller('AppController', [
     '$state', '$location', '$scope', 'ApplicationService',
-    function ($state, $location, $scope, ApplicationService) {}
+    function ($state, $location, $scope, ApplicationService) {
+      // console.log(user) ApplicationService.getUser()
+      console.log('applicationcontroller initialized')
+      if (true) {
+        console.log('goto dashboard')
+        $state.go('dashboard.taste')
+      } else {
+        console.log('goto login')
+        $state.go('login')
+      }
+    }
   ])
   .service('ApplicationService', ['$state', '$location', '$firebaseAuth', function ($state, $location, $firebaseAuth) {
     var user = ''
@@ -113,14 +102,7 @@ angular.module('whiskey.webapp',
   'ApplicationService',
   function ($state, ApplicationService) {
     // var user = 
-    // console.log(user)
-    if (ApplicationService.getUser()) {
-      console.log('goto dashboard')
-      $state.go('dashboard')
-    } else {
-      console.log('goto login')
-      $state.go('login')
-    }
+    console.log('app run')
   }])
   /*;(function (orig) {
     angular.modules = []

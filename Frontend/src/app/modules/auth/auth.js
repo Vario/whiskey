@@ -6,11 +6,9 @@ var ngmod = angular.module('whiskey.auth', [
   .controller('LoginController', [
     '$scope',
     '$state',
-    '$rootScope',
-    'LoginService',
     '$location',
     '$firebaseAuth',
-    function ($scope, $state, $rootScope, LoginService, $location, $firebaseAuth) {
+    function ($scope, $state, LoginService, $location, $firebaseAuth) {
       console.log('in login')
       $scope.signIn = function () {
         $scope.loading.inc()
@@ -29,8 +27,11 @@ var ngmod = angular.module('whiskey.auth', [
           $scope.errorMessage = error.message
         })
       }
-      $scope.register = function () {
-        $state.go('register', {})
+      $scope.gotoregister = function () {
+        // $state.go('register', {})
+      }
+      $scope.gotologin = function () {
+        // $state.go('login', {})
       }
     }]).service('LoginService', [
   '$state',

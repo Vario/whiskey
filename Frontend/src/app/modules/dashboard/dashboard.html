@@ -1,7 +1,11 @@
-<div class="navigation">
-    <ui-view name="navigation">MENU</ui-view>
+<div class="menu">
+    <ul>
+        <li ui-sref="dashboard.taste">Whiskeys</li>
+        <li ui-sref="dashboard.user">User</li>
+        <li ng-click="logout()">logout</li>
+    </ul>
 </div>
 
 <div class="ui-view-container">
-    <div ui-view name="content">CONTENT</div>
+    <div ui-view>CONTENT</div>
 </div>

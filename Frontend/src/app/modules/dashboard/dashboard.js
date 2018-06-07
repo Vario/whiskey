@@ -12,8 +12,13 @@ var ngmod = angular.module('whiskey.dashboard', [
     '$state',
     '$rootScope',
     '$location',
-    function ($scope, $state, $rootScope, $location) {
+    'ApplicationService',
+    function ($scope, $state, $rootScope, $location, ApplicationService) {
       // goto taste
       console.log('in dashboard')
-      $state.go('dashboard.taste')
+      $scope.logout = function () {
+        console.log('logout')
+        ApplicationService.logoutUser()
+      // Goto Login
+      }
     }])
