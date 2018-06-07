@@ -1,0 +1,57 @@
+html {
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+  font-size: 45px;
+
+  @media(max-width: 767px) {
+    font-size: 30px;
+  }
+}
+
+h2 {
+  font-size: 20px;
+
+  @media(max-width: 991px) {
+    font-size: 18px;
+  }
+  @media(max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+h3 {
+  font-size: 15px;
+
+  @media(max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+div.large, span.large, input.large, select.large {
+  font-size: 18px;
+
+  @media(max-width: 991px) {
+    font-size: 16px;
+  }
+  @media(max-width: 767px) {
+    font-size: 14px;
+  }
+}
+
+label, div, span, input, select {
+  font-size: 14px;
+
+  @media(max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+p {
+  font-size: 13px;
+
+  @media(max-width: 991px) {
+    font-size: 12px;
+  }
+}
