@@ -1,7 +1,0 @@
-{
-    "short_name": "WhiskeyFriends",
-    "name": "WhiskeyFriends",
-    "display": "standalone",
-    "theme_color": "#0072B7",
-    "start_url": "/#/?launcher=true"
-}
