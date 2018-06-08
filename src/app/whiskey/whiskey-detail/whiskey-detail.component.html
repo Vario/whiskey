@@ -1,0 +1,9 @@
+<div>
+  <h3>{{ whiskey.content }}</h3>
+  <span class="button is-small is-info" (click)='addHeartToWhiskey(whiskey.hearts)'>
+    Heart
+    <i class="fa fa-heart" style="margin-left: 5px;"></i>
+  </span>
+  <span class="button is-small is-danger" (click)='deleteWhiskey(whiskey?.id)'>Delete</span>
+  <p>This whiskey has been hearted {{ whiskey.hearts || 0 }} times.</p>
+</div>

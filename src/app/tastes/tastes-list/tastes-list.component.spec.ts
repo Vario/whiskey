@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MainNavComponent } from './main-nav.component'
+import { TastesListComponent } from './tastes-list.component'
 
-describe('MainNavComponent', () => {
-  let component: MainNavComponent
-  let fixture: ComponentFixture<MainNavComponent>
+xdescribe('TastesListComponent', () => {
+  let component: TastesListComponent
+  let fixture: ComponentFixture<TastesListComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MainNavComponent]
+      declarations: [TastesListComponent]
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainNavComponent)
+    fixture = TestBed.createComponent(TastesListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })

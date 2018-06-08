@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { MainNavComponent } from './main-nav.component'
+import { WhiskeyListComponent } from './whiskey-list.component'
 
-describe('MainNavComponent', () => {
-  let component: MainNavComponent
-  let fixture: ComponentFixture<MainNavComponent>
+xdescribe('WhiskeyListComponent', () => {
+  let component: WhiskeyListComponent
+  let fixture: ComponentFixture<WhiskeyListComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MainNavComponent]
+      declarations: [WhiskeyListComponent]
     }).compileComponents()
   }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainNavComponent)
+    fixture = TestBed.createComponent(WhiskeyListComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
   })
