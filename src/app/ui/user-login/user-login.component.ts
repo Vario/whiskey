@@ -16,10 +16,6 @@ export class UserLoginComponent {
 
   /// Social Login
 
-  async signInWithGithub() {
-    await this.auth.githubLogin();
-    return await this.afterSignIn();
-  }
 
   async signInWithGoogle() {
     await this.auth.googleLogin();
@@ -29,18 +25,6 @@ export class UserLoginComponent {
   async signInWithFacebook() {
     await this.auth.facebookLogin();
     await this.afterSignIn();
-  }
-
-  async signInWithTwitter() {
-    await this.auth.twitterLogin();
-    return await this.afterSignIn();
-  }
-
-  /// Anonymous Sign In
-
-  async signInAnonymously() {
-    await this.auth.anonymousLogin();
-    return await this.afterSignIn();
   }
 
   /// Shared
