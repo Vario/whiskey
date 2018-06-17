@@ -13,15 +13,16 @@ export class WhiskeyBottleListComponent implements OnInit {
   constructor(private whiskeyService: WhiskeyService) {}
 
   ngOnInit() {
-    this.whiskeybottles$ = this.whiskeyService.getWhiskeyBottles()
     console.log('init whiskey bottle list')
+    this.whiskeybottles$ = this.whiskeyService.getWhiskeyBottles()
+    this.whiskeybottles$.subscribe(whiskey => console.log('whiskey in list' + whiskey))
   }
   addNewWhiskeyBottle() {
-    this.whiskeyService.createWhiskey('whiskey', 'brand').then(
+    /*this.whiskeyService.createWhiskey('whiskey', 'brand').then(
       whiskey => {
         console.log('Whiskey added')
       },
       () => console.log('Task Errored!')
-    )
+    )*/
   }
 }

@@ -1,5 +1,9 @@
-<div style="background-color:blue">
+<div>
   <h3>{{ WhiskeyBottle.name }}</h3>
+  <span class="button is-small is-info" (click)='tasteWhiskey(WhiskeyBottle)'>
+    Taste
+    <i class="fa wine-glass" style="margin-left: 5px;"></i>
+  </span>
   <span class="button is-small is-info" (click)='addHeartToWhiskey(WhiskeyBottle)'>
     Heart
     <i class="fa fa-heart" style="margin-left: 5px;"></i>
