@@ -23,7 +23,6 @@ export class WhiskeyBottleListComponent implements OnInit {
     console.log('add new whiskey')
 
     const dialogConfig = new MatDialogConfig()
-
     dialogConfig.autoFocus = true
     dialogConfig.data = {}
     const dialogRef = this.dialog.open(WhiskeyAddComponent, dialogConfig)

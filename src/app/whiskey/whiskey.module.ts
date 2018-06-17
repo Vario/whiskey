@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { MatCardModule, MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material'
+import { MatCardModule, MatDialogModule, MatToolbarModule, MatIconModule, MatGridListModule } from '@angular/material'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { WhiskeyBottleListComponent } from './whiskey-bottlelist/whiskey-bottlelist.component'
@@ -16,11 +16,12 @@ import { WhiskeyService } from './whiskey.service'
     CommonModule,
     FormsModule,
     MatCardModule,
+    MatDialogModule,
+    MatGridListModule,
     MatIconModule,
     MatToolbarModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule
+    ReactiveFormsModule
   ],
   entryComponents: [WhiskeyAddComponent],
   declarations: [WhiskeyBottleListComponent, WhiskeyDetailComponent, WhiskeyAddComponent],

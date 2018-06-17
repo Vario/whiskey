@@ -33,6 +33,7 @@
     "@angular/service-worker": "^6.0.1",
     "@nguniversal/module-map-ngfactory-loader": "^6.0.0",
     "angularfire2": "^5.0.0-rc.9",
+    "bootstrap": "^4.0.0",
     "core-js": "^2.5.4",
     "firebase": "^5.0.2",
     "rxjs": "^6.0.0",

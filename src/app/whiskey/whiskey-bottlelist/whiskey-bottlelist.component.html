@@ -7,3 +7,28 @@
 <div *ngFor="let whiskey of whiskeybottles$ | async">
   <whiskey-detail [WhiskeyBottle]="whiskey"></whiskey-detail>
 </div>
+
+<!--<div class="grid-container">
+  <h1 class="mat-h1">Whiskeys to taste</h1>
+  <button class="button is-success" (click)="addNewWhiskeyBottle()">
+    Add New Whiskey Bottle
+  </button>
+  <mat-grid-list cols="5" rowHeight="350px">
+    <mat-grid-tile *ngFor="let whiskey of whiskeybottles$">
+      <mat-card class="dashboard-card">
+        CARD
+        <mat-card-header>
+          <mat-card-title>
+            {{whiskey.name}}
+            <button mat-icon-button class="more-button" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>Card Content Here</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>-->
