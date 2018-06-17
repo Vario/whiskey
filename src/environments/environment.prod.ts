@@ -8,4 +8,4 @@ export const environment = {
     storageBucket: 'whiskeytaste-307bd.appspot.com',
     messagingSenderId: '960794625142'
   }
-}
+};

@@ -1,5 +1,5 @@
 {
-  "name": "firestarter",
+  "name": "whiskeyworld",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -8,19 +8,21 @@
     "test": "ng test --watch false",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:all": "ng build --prod && ng run firestarter:server && npm run webpack:prerender && npm run prerender",
-    "serve:prerender": "http-server dist/firestarter -c-1",
+    "build:all": "ng build --prod && ng run whiskeyworld:server && npm run webpack:prerender && npm run prerender",
+    "serve:prerender": "http-server dist/whiskeyworld -c-1",
     "webpack:prerender": "webpack --config webpack.prerender.config.js",
-    "prerender": "node dist/firestarter/prerender.js"
+    "prerender": "node dist/whiskeyworld/prerender.js"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.1",
+    "@angular/cdk": "6.0.1",
     "@angular/common": "^6.0.1",
     "@angular/compiler": "^6.0.1",
     "@angular/core": "^6.0.1",
     "@angular/forms": "^6.0.1",
     "@angular/http": "^6.0.1",
+    "@angular/material": "6.0.1",
     "@angular/platform-browser": "^6.0.1",
     "@angular/platform-browser-dynamic": "^6.0.1",
     "@angular/platform-server": "^6.0.1",

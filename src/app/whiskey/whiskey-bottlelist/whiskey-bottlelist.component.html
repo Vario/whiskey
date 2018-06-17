@@ -1,0 +1,13 @@
+<h1>Whiskey's to taste</h1>
+<hr>
+
+<input [(ngModel)]="content" placeholder="Add your own whiskey bottle" class="input">
+
+
+<button class="button is-success" (click)="addNewWhiskeyBottle()">
+  Add Whiskey Bottle
+</button>
+<hr>
+<div *ngFor="let whiskey of whiskeybottles | async">
+  <whiskey-detail [WhiskeyBottle]="whiskey"></whiskey-detail>
+</div>

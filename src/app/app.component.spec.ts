@@ -4,9 +4,7 @@ import { AppComponent } from './app.component'
 import { CoreModule } from './core/core.module'
 import { UploadsModule } from './uploads/uploads.module'
 import { UiModule } from './ui/ui.module'
-import { TastesModule } from './tastes/tastes.module'
 import { WhiskeyModule } from './whiskey/whiskey.module'
-import { UserModule } from './user/user.module'
 import { AngularFireModule } from 'angularfire2'
 import { AngularFirestoreModule } from 'angularfire2/firestore'
 import { AngularFireStorageModule } from 'angularfire2/storage'
@@ -22,9 +20,7 @@ describe('AppComponent', () => {
         UploadsModule,
         UiModule,
         WhiskeyModule,
-        UserModule,
-        TastesModule,
-        AngularFireModule.initializeApp(environment, 'firestarter'),
+        AngularFireModule.initializeApp(environment.firebase, 'Whiskey World'),
         AngularFirestoreModule,
         AngularFireAuthModule,
         AngularFireStorageModule

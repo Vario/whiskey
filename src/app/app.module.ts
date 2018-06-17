@@ -4,15 +4,13 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { ServiceWorkerModule } from '@angular/service-worker'
-import { environment } from '../environments/environment.prod'
+import { environment } from '../environments/environment'
 
-// Firestarter App Modules
+// WhiskeyWorld App Modules
 import { CoreModule } from './core/core.module'
 import { UploadsModule } from './uploads/uploads.module'
 import { UiModule } from './ui/ui.module'
 import { WhiskeyModule } from './whiskey/whiskey.module'
-import { UserModule } from './user/user.module'
-import { TastesModule } from './tastes/tastes.module'
 
 // AngularFire2 Modules
 import { AngularFireModule } from 'angularfire2'
@@ -30,8 +28,6 @@ import { AngularFireFunctionsModule } from 'angularfire2/functions'
     CoreModule,
     UiModule,
     WhiskeyModule,
-    TastesModule,
-    UserModule,
     UploadsModule,
     AngularFireModule.initializeApp(environment.firebase, 'whiskeyfriends'),
     AngularFirestoreModule,

@@ -13,22 +13,19 @@ export class UserLoginComponent {
   constructor(public auth: AuthService, private router: Router) {}
 
   /// Social Login
-
-  /*async signInWithGoogle() {
-    await this.auth.googleLogin();
-    return await this.afterSignIn();
+  async signInWithGoogle() {
+    await this.auth.googleLogin()
+    return await this.afterSignIn()
   }
 
   async signInWithFacebook() {
-    await this.auth.facebookLogin();
-    await this.afterSignIn();
+    await this.auth.facebookLogin()
+    await this.afterSignIn()
   }
-*/
   /// Shared
 
   private afterSignIn() {
     // Do after login stuff here, such router redirects, toast messages, etc.
-    console.log('after signIn')
     return this.router.navigate(['/whiskey'])
   }
 }

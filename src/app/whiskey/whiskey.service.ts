@@ -4,45 +4,47 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { WhiskeyBottle } from './whiskeybottle.model'
 
 @Injectable()
 export class WhiskeyService {
+  whiskeybottleCollection: AngularFirestoreCollection<any>
   whiskeyCollection: AngularFirestoreCollection<any>
+  whiskeyDocument: AngularFirestoreDocument<any>
 
   constructor(private afs: AngularFirestore) {
-    this.whiskeyCollection = this.afs.collection('whiskeys', ref => ref.orderBy('time', 'desc').limit(5))
+    this.whiskeybottleCollection = this.afs.collection('whiskeybottles', ref =>
+      ref.orderBy('createdAt', 'desc').limit(5)
+    )
   }
 
-  getData(): Observable<any[]> {
-    // ['added', 'modified', 'removed']
-    return this.whiskeyCollection.snapshotChanges().pipe(
+  getWhiskeyBottles(): Observable<any[]> {
+    return this.whiskeybottleCollection.snapshotChanges().pipe(
       map(actions => {
-        return actions.map(a => {
+        let res = actions.map(a => {
           const data = a.payload.doc.data()
           return { id: a.payload.doc.id, ...data }
         })
+        return res
       })
     )
   }
 
   getWhiskey(id: string) {
-    return this.afs.doc<any>(`whiskeys/${id}`)
+    return this.afs.doc<any>(`whiskeybottles/${id}`)
   }
 
-  createWhiskey(content: string) {
+  createWhiskey(name: string, brand: string) {
     const whiskey = {
-      content,
+      name: name,
+      brand: brand,
       hearts: 0,
-      time: new Date().getTime()
+      createdAt: new Date().getTime()
     }
-    return this.whiskeyCollection.add(whiskey)
+    return this.whiskeybottleCollection.add(whiskey)
   }
 
-  updateWhiskey(id: string, data: any) {
-    return this.getWhiskey(id).update(data)
-  }
-
-  deleteWhiskey(id: string) {
-    return this.getWhiskey(id).delete()
+  updateWhiskey(whiskey: WhiskeyBottle) {
+    //return this.getWhiskey(id).update(data)
   }
 }

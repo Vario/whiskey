@@ -1,6 +1,6 @@
 import { WhiskeyModule } from './whiskey.module'
 
-describe('WhiskeyModule', () => {
+describe('NotesModule', () => {
   let whiskeyModule: WhiskeyModule
 
   beforeEach(() => {

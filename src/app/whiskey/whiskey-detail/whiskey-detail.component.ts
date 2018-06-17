@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core'
 
 import { WhiskeyService } from '../whiskey.service'
+import { WhiskeyBottle } from '../whiskeybottle.model'
 
 @Component({
   selector: 'whiskey-detail',
@@ -8,19 +9,16 @@ import { WhiskeyService } from '../whiskey.service'
   styleUrls: ['./whiskey-detail.component.scss']
 })
 export class WhiskeyDetailComponent {
-  @Input() whiskey: any
+  @Input() WhiskeyBottle: any
 
   constructor(private whiskeyService: WhiskeyService) {}
 
-  addHeartToWhiskey(val: number) {
-    if (this.whiskey.id) {
-      this.whiskeyService.updateWhiskey(this.whiskey.id, { hearts: val + 1 })
-    } else {
-      console.error('Whiskey missing ID!')
-    }
-  }
-
-  deleteWhiskey(id: string) {
-    this.whiskeyService.deleteWhiskey(id)
+  addHeartToWhiskey(val: WhiskeyBottle) {
+    //if (this.whiskey.id) {
+    this.WhiskeyBottle.hearts += 1
+    this.whiskeyService.updateWhiskey(this.WhiskeyBottle)
+    //} else {
+    // console.error('whiskey missing ID!')
+    //}
   }
 }
