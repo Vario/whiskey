@@ -21,20 +21,28 @@ export class WhiskeyAddComponent implements OnInit {
   ) {}
 
   onNoClick(): void {
+    console.log('cancel')
     this.dialogRef.close()
   }
 
   ngOnInit() {
     this._whiskeyForm = this._formBuilder.group({
-      ID: [this.data.ID],
       Name: [this.data.name, [Validators.required]],
       Brand: [this.data.brand, [Validators.required]]
     })
   }
 
   onSubmit() {
-    if (isNaN(this.data.ID)) {
+    if (isNaN(this.data.Name)) {
+      console.log('add whiskey')
       //this._whiskeyService.createWhiskey(this._whiskeyForm.value)
+      /*this._whiskeyService.createWhiskey(this._whiskeyForm.value., 'brand').then(
+        whiskey => {
+         console.log('Whiskey added')
+        },
+        () => console.log('Task Errored!')
+      )*/
+
       this.dialogRef.close()
     } else {
       //this._whiskeyService.createWhiskey(this._whiskeyForm.value)

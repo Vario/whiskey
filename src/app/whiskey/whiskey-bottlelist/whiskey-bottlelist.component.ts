@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { WhiskeyService } from '../whiskey.service'
 import { Observable } from 'rxjs'
+import { MatDialog, MatDialogConfig } from '@angular/material'
+import { WhiskeyAddComponent } from '../whiskey-add/whiskey-add.component'
 
 @Component({
   selector: 'whiskey-bottlelist',
@@ -9,20 +11,25 @@ import { Observable } from 'rxjs'
 })
 export class WhiskeyBottleListComponent implements OnInit {
   whiskeybottles$: Observable<any[]>
-
-  constructor(private whiskeyService: WhiskeyService) {}
+  isPopupOpened = true
+  constructor(private whiskeyService: WhiskeyService, private dialog: MatDialog) {}
 
   ngOnInit() {
     console.log('init whiskey bottle list')
     this.whiskeybottles$ = this.whiskeyService.getWhiskeyBottles()
-    this.whiskeybottles$.subscribe(whiskey => console.log('whiskey in list' + whiskey))
   }
   addNewWhiskeyBottle() {
-    /*this.whiskeyService.createWhiskey('whiskey', 'brand').then(
-      whiskey => {
-        console.log('Whiskey added')
-      },
-      () => console.log('Task Errored!')
-    )*/
+    this.isPopupOpened = true
+    console.log('add new whiskey')
+
+    const dialogConfig = new MatDialogConfig()
+
+    dialogConfig.autoFocus = true
+    dialogConfig.data = {}
+    const dialogRef = this.dialog.open(WhiskeyAddComponent, dialogConfig)
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.isPopupOpened = false
+    })
   }
 }
