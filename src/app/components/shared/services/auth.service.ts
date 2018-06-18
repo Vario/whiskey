@@ -54,6 +54,7 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithPopup(provider)
       .then(credential => {
+        this.router.navigate(['/whiskey'])
         return this.updateUserData(credential.user)
       })
       .catch(error => this.handleError(error))
@@ -65,6 +66,7 @@ export class AuthService {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
       .then(credential => {
+        this.router.navigate(['/whiskey'])
         return this.updateUserData(credential.user) // if using firestore
       })
       .catch(error => this.handleError(error))
@@ -74,6 +76,7 @@ export class AuthService {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(credential => {
+        this.router.navigate(['/whiskey'])
         return this.updateUserData(credential.user)
       })
       .catch(error => this.handleError(error))

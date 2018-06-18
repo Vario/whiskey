@@ -7,29 +7,25 @@
 </mat-card-header>
 <mat-card-content>
     <div class="container">
-        <form [formGroup]="_whiskeyForm">
+        <form [formGroup]="_whiskeyForm" novalidate (ngSubmit)="onSubmit()">
             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Name</label>
-                        <input type="text" formControlName="Name" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label>Brand</label>
-                        <input type="text" formControlName="Brand" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button (click)="onSubmit()" class="btn btn-success">
-                            <mat-icon>save</mat-icon>
-                        </button>
-                    </div>
+                <label>Name</label>
+                <input type="text" formControlName="Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Name.errors }" />
+                <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
+                    <div *ngIf="f.Name.errors.required">Name is required</div>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label>Brand</label>
+                <input type="text" formControlName="Brand" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Brand.errors }"
+                />
+                <div *ngIf="submitted && f.Brand.errors" class="invalid-feedback">
+                    <div *ngIf="f.Brand.errors.required">Brand is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Save</button>
+            </div>
         </form>
     </div>
 </mat-card-content>

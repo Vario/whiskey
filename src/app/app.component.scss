@@ -2,7 +2,7 @@
   padding: 20px;
 }
 
-.app-content mat-card{
+.app-content mat-card {
   margin: 20px;
 }
 
@@ -10,4 +10,7 @@
   z-index: 20;
   display: inherit;
   padding: 0;
+}
+.invalid-feedback {
+  color: red;
 }
