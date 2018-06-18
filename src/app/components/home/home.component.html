@@ -1,0 +1,5 @@
+<div *ngIf="!(authService.user | async);">
+    <app-email-me></app-email-me>
+    <app-background-email></app-background-email>
+</div>
+<button mat-raised-button class="mat-raised mat-primary" (click)="onToTop()">Top</button>
