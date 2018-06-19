@@ -1,0 +1,5 @@
+<mat-grid-list cols="4" rowHeight="100px">
+    <mat-grid-tile *ngFor="let whiskey of whiskeyBottles$ | async">
+        <bottle-detail [WhiskeyBottle]="whiskey"></bottle-detail>
+    </mat-grid-tile>
+</mat-grid-list>

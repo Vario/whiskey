@@ -1,15 +1,11 @@
-<mat-card-header>
-    <h1>Welcome to the world of whiskey</h1>
-</mat-card-header>
-<mat-card-content>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="btn btn-success" (click)="addNewWhiskeyBottle()">Add a new whiskey bottle</div>
-            </div>
+<h1>
+    Welcome to the world of whiskey</h1>
+<div class="btn btn-success" (click)="addNewWhiskeyBottle()">New bottle</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <bottle-list></bottle-list>
         </div>
     </div>
-    <div>
-        <bottle-list></bottle-list>
-    </div>
-</mat-card-content>
+</div>

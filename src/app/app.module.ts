@@ -35,6 +35,7 @@ import { BackgroundsModule } from './components/backgrounds/backgrounds.module'
 import { ProfileModule } from './components/profile/profile.module'
 import { MiscModule } from './components/misc/misc.module'
 import { WhiskeyModule } from './components/whiskey/whiskey.module'
+//import { FileModule } from './components/file/file.module'
 // Shared
 import {
   FooterComponent,
@@ -57,6 +58,7 @@ import { HomeComponent } from './components/home/home.component'
 import { PageNotFoundComponent } from './components/not-found/not-found.component'
 import { EmailMeComponent } from './components/email-me/email-me.component'
 import { environment } from '../environments/environment'
+//import { DropZoneDirective } from './components/file/upload/drop-zone.directive'
 
 @NgModule({
   declarations: [
@@ -100,6 +102,7 @@ import { environment } from '../environments/environment'
     ProfileModule,
     MiscModule,
     WhiskeyModule
+    //FileModule
   ],
   providers: [AlertService, AuthGuardService, AuthService, WindowService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

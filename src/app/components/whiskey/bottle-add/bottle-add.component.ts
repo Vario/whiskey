@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
 import { WhiskeyService } from '../../shared/services/whiskey.service'
-
+//import { FileUploadComponent } from '../../file/upload/upload.component'
 @Component({
   selector: 'bottle-add',
   templateUrl: './bottle-add.component.html',
@@ -22,9 +22,12 @@ export class WhiskeyBottleAddComponent {
   ngOnInit() {
     this._whiskeyForm = this._formBuilder.group({
       Name: ['', Validators.required],
+      Price: ['', Validators.required],
+      Size: ['', Validators.required],
       Brand: ['', Validators.required]
     })
   }
+
   onNoClick(): void {
     this.dialogRef.close()
   }
@@ -40,11 +43,12 @@ export class WhiskeyBottleAddComponent {
       return
     }
 
+    console.log('create whiskey')
     this._whiskeyService.createWhiskey(
       this._whiskeyForm.get('Name').value,
       this._whiskeyForm.get('Brand').value,
-      65.7,
-      70
+      this._whiskeyForm.get('Price').value,
+      this._whiskeyForm.get('Size').value
     )
     this.dialogRef.close()
   }

@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-title class="md-card-title">{{WhiskeyBottle.name}}</mat-card-title>
+    <mat-card-subtitle class="md-card-title">{{WhiskeyBottle.name}}</mat-card-subtitle>
+
+    <!--<img mat-card-image [src]="{{WhiskeyBottle.imageUrl}}" />-->
+
+    <mat-card-content>
+        <div class="card-text-content">
+            {{WhiskeyBottle.brand}}
+        </div>
+    </mat-card-content>
+
+    <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+        <button md-button (click)="openDialog()">Taste</button>
+    </mat-card-actions>
+
+</mat-card>

@@ -24,6 +24,26 @@
                 </div>
             </div>
             <div class="form-group">
+                <label>Size (cl)</label>
+                <input type="text" formControlName="Size" minlength="2" maxlength="4" pattern="[0-9]*" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Size.errors }"
+                />
+                <div *ngIf="submitted && f.Size.errors" class="invalid-feedback">
+                    <div *ngIf="f.Size.errors.required">Size is required</div>
+                    <div *ngIf="f.Size.errors.pattern">Enter valid number</div>
+                    <div *ngIf="f.Size.errors.maxlength">Size is too big</div>
+                    <div *ngIf="f.Size.errors.minlength">Size is too small</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Price (€)</label>
+                <input type="text" formControlName="Price" pattern="[0-9]*" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Price.errors }"
+                />
+                <div *ngIf="submitted && f.Brand.errors" class="invalid-feedback">
+                    <div *ngIf="f.Price.errors.required">Price is required</div>
+                    <div *ngIf="f.Size.errors.pattern">Enter valid price</div>
+                </div>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form>
