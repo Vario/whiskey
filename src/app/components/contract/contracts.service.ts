@@ -5,19 +5,65 @@ https://github.com/Nikhil22/angular-truffle-starter-dapp
 
 */
 import { environment } from '../../../environments/environment'
-
+import { Observable } from 'rxjs'
 import { Injectable } from '@angular/core'
 import * as Web3 from 'web3'
 
 declare let require: any
 declare let window: any
 
-let tokenAbi = require('./tokenContract.json')
-
 @Injectable({
   providedIn: 'root'
 })
 export class ContractsService {
+  public web3: any
+
+  constructor() {
+    //this.checkAndInstantiateWeb3()
+  }
+
+  checkAndInstantiateWeb3 = () => {
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    if (typeof window.web3 !== 'undefined') {
+      console.warn(
+        "Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask"
+      )
+      // Use Mist/MetaMask's provider
+      this.web3 = new Web3(window.web3.currentProvider)
+    } else {
+      console.warn(
+        "No web3 detected. Falling back to ${environment.HttpProvider}. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask"
+      )
+      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+      this.web3 = new Web3(new Web3.providers.HttpProvider(environment.HttpProvider))
+    }
+  }
+
+  checkNetwork(): boolean {
+    //TODO check network here?
+    if (this.web3.version.network == environment.blockchain.networks.rinkeby) {
+      return true
+    } else {
+      console.log('Please connect to the Rinkeby network')
+      return false
+    }
+  }
+  getAccounts(): Observable<any> {
+    return Observable.create(observer => {
+      this.web3.eth.getAccounts((err, accs) => {
+        if (err != null) {
+          observer.error('There was an error fetching your accounts.')
+        }
+
+        if (accs.length === 0) {
+          observer.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.")
+        }
+
+        observer.next(accs)
+        observer.complete()
+      })
+    })
+  }
   /*
   Observe account variable if it is changed in metamask
   Observable.timer(0, 1000).subscribe(() => { 
@@ -26,6 +72,7 @@ export class ContractsService {
     }
    }
 */
+  /*
   private _account: string = null
   private _web3: any
 
@@ -48,10 +95,11 @@ export class ContractsService {
 
     this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress)
   }
-
+*/
   /*
   Method to get accout for balance etc..
    */
+  /*
   private async getAccount(): Promise<string> {
     if (this._account == null) {
       this._account = (await new Promise((resolve, reject) => {
@@ -89,4 +137,5 @@ export class ContractsService {
       })
     }) as Promise<number>
   }
+  */
 }

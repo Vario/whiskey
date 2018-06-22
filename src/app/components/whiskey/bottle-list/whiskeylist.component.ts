@@ -11,6 +11,26 @@ import { Observable } from 'rxjs'
 export class WhiskeyBottleListComponent {
   constructor(private whiskeyService: WhiskeyService) {}
   whiskeyBottles$: Observable<any[]>
+  cols = 6
+  ngOnInit() {
+    this.whiskeyBottles$ = this.whiskeyService.getWhiskeyBottles()
+  }
+  onResize(event) {
+    const element = event.target.innerWidth
+    console.log(element)
+
+    if (element < 950) {
+      this.cols = 3
+    }
+
+    if (element > 950) {
+      this.cols = 6
+    }
+
+    if (element < 750) {
+      this.cols = 1
+    }
+  }
 
   whiskeyBottles() {
     let bottles = this.whiskeyService.getWhiskeyBottles()
@@ -18,9 +38,6 @@ export class WhiskeyBottleListComponent {
     return bottles
   }
 
-  ngOnInit() {
-    this.whiskeyBottles$ = this.whiskeyService.getWhiskeyBottles()
-  }
   onNoClick(): void {
     //this.dialogRef.close()
   }

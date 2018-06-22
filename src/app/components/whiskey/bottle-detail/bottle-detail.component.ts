@@ -13,6 +13,7 @@ export class WhiskeyBottleDetailComponent {
   constructor(private whiskeyService: WhiskeyService) {}
 
   taste() {
-    //this.whiskeyService.tasteWhiskey(this.WhiskeyBottle)
+    console.log('taste start')
+    this.whiskeyService.tasteWhiskey(this.WhiskeyBottle)
   }
 }

@@ -8,6 +8,10 @@ import { WhiskeyBottleDetailComponent } from './bottle-detail/bottle-detail.comp
 import { WhiskeyBottleAddComponent } from './bottle-add/bottle-add.component'
 import { WhiskeyDashboardComponent } from './whiskeydashboard.component'
 import { WhiskeyService } from '../shared/services/whiskey.service'
+import { WhiskeyTasteService } from '../shared/services/whiskeytaste.service'
+import { WhiskeyTasteListComponent } from './taste-list/tastelist.component'
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
+import { ContractsService } from '../contract/contracts.service'
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -26,8 +30,10 @@ import { WhiskeyService } from '../shared/services/whiskey.service'
     WhiskeyBottleAddComponent,
     WhiskeyDashboardComponent,
     WhiskeyBottleListComponent,
-    WhiskeyBottleDetailComponent
+    WhiskeyBottleDetailComponent,
+    WhiskeyTasteListComponent
   ],
-  providers: [WhiskeyService]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [WhiskeyService, WhiskeyTasteService]
 })
 export class WhiskeyModule {}

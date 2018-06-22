@@ -5,11 +5,16 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { AuthService } from './auth.service'
 import { WhiskeyBottle } from './../../whiskey/whiskeybottle.model'
+import { WhiskeyTasteService } from './whiskeytaste.service'
 
 @Injectable()
 export class WhiskeyService {
   whiskeybottleCollection: AngularFirestoreCollection<any>
-  constructor(private afs: AngularFirestore, private authService: AuthService) {
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AuthService,
+    private whiskeyTasteService: WhiskeyTasteService
+  ) {
     this.whiskeybottleCollection = this.afs.collection('whiskeybottles', ref =>
       ref.orderBy('createdAt', 'desc').limit(5)
     )
@@ -43,7 +48,7 @@ export class WhiskeyService {
       ownerid: this.authService.userID,
       price: price,
       size: size,
-      imageUrl: "https://www.google.at/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiB6cjl4t3bAhXCZ1AKHYTwCk8QjRx6BAgBEAU&url=https%3A%2F%2Fwww.drinksupermarket.com%2Fjack-daniels-old-no-7-tennessee-bourbon-whiskey-miniature-5cl-40-abv&psig=AOvVaw2TVAJxvaQr6ev24u_idQOK&ust=1529428700337926",
+      imageUrl: 'https://material.angular.io/assets/img/examples/shiba2.jpg',
       usedtastes: 0,
       available: true
     }
@@ -56,5 +61,10 @@ export class WhiskeyService {
 
   tasteWhiskey(data: any) {
     console.log('taste whiskey:' + data.id)
+    this.whiskeyTasteService.tasteWhiskey(data, this.authService.userID)
+    //Promise for tasting with blockchain
+    /*this.whiskeyTasteService.tasteWhiskey(data.id, data.supplier, data.price).then(contractAddress => {
+      console.log('contract for taste: ' + contractAddress)
+    })*/
   }
 }

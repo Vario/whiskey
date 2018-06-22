@@ -1,7 +1,7 @@
 <!-- Sidenav -->
 <mat-sidenav mode="over" opened="false" #sidenav class="sidenav">
 
-  <img [src]="angularImage">
+  <!--<img [src]="logo">-->
 
   <div class="menu-link">
     <div *ngIf="!(authService.user | async);">
@@ -14,6 +14,12 @@
       <button mat-button routerLink="/whiskey" (click)="sidenav.close()">
         <mat-icon class="whiskey">local_drink</mat-icon>
         <span>Whiskeys</span>
+      </button>
+    </div>
+    <div *ngIf="(authService.user | async);">
+      <button mat-button routerLink="/tastes" (click)="sidenav.close()">
+        <mat-icon class="whiskey">tag_faces</mat-icon>
+        <span>Tastes</span>
       </button>
     </div>
     <hr>
@@ -58,6 +64,12 @@
       <button mat-button routerLink="/whiskey" (click)="sidenav.close()">
         <mat-icon>local_drink</mat-icon>
         <span>Whiskeys</span>
+      </button>
+    </div>
+    <div *ngIf="(authService.user | async);">
+      <button mat-button routerLink="/tastes" (click)="sidenav.close()">
+        <mat-icon>tag_faces</mat-icon>
+        <span>Tastes</span>
       </button>
     </div>
   </div>

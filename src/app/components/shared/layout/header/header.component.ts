@@ -10,7 +10,6 @@ import { AuthService, AlertService } from '../../services'
 })
 export class HeaderComponent {
   title = ''
-  angularImage: string
 
   menuItems: Array<Object> = [
     /*{
@@ -20,9 +19,7 @@ export class HeaderComponent {
     },*/
   ]
 
-  constructor(public authService: AuthService, private alertService: AlertService) {
-    this.angularImage = '/assets/img/angular2.png'
-  }
+  constructor(public authService: AuthService, private alertService: AlertService) {}
 
   userUid() {
     return this.authService.userID

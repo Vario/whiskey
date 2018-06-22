@@ -12,6 +12,7 @@ import { PageNotFoundComponent } from './components/not-found/not-found.componen
 import { HomeComponent } from './components/home/home.component'
 import { MiscComponent } from './components/misc/misc.component'
 import { WhiskeyDashboardComponent } from './components/whiskey/whiskeydashboard.component'
+import { WhiskeyTasteListComponent } from './components/whiskey/taste-list/tastelist.component'
 
 // Components
 import { SignupComponent } from './components/auth/signup.component'
@@ -37,6 +38,7 @@ const appRoutes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService] },
   { path: 'profile-settings', component: ProfileSettingsComponent, canActivate: [AuthGuardService] },
   { path: 'whiskey', component: WhiskeyDashboardComponent, canActivate: [AuthGuardService] },
+  { path: 'tastes', component: WhiskeyTasteListComponent, canActivate: [AuthGuardService] },
   { path: 'messages', component: MessagesComponent, canActivate: [AuthGuardService] },
   { path: '**', component: PageNotFoundComponent }
 ]

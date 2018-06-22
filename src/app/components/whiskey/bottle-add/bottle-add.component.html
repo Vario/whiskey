@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Price (€)</label>
+                <label>Price for a taste (€)</label>
                 <input type="text" formControlName="Price" pattern="[0-9]*" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Price.errors }"
                 />
                 <div *ngIf="submitted && f.Brand.errors" class="invalid-feedback">
