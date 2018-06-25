@@ -10,6 +10,7 @@ prerender.ts
 
 # dependencies
 /node_modules
+/smart_contracts/node_modules
 
 # IDEs and editors
 /.idea

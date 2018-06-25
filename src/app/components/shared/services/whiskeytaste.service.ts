@@ -3,7 +3,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { fromPromise } from 'rxjs/observable/fromPromise'
 import { ContractsService } from '../../../components/contract/contracts.service'
-//import * as whiskeyTasteArtifacts from '../../../../build/contracts/WhiskeyTaste.json'
+import whiskeyTasteArtifact from '../../../../../smart_contracts/build/whiskeytaste.json'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore'
 import { AuthService } from './auth.service'
 
@@ -11,7 +11,16 @@ import { AuthService } from './auth.service'
 export class WhiskeyTasteService {
   othersTastesForMyWhiskeyCollection: AngularFirestoreCollection<any>
   myWhiskeysToTasteCollection: AngularFirestoreCollection<any>
-  constructor(private afs: AngularFirestore, private authService: AuthService) {
+  private contractDeployedAt: '0xEc3c889F6190c78E5497e2C64F82ea72db80F054'
+  private interface = (<any>whiskeyTasteArtifact).interface
+  private accounts: string[]
+  private tastes: any[]
+
+  constructor(
+    private afs: AngularFirestore,
+    private authService: AuthService,
+    private contractsService: ContractsService
+  ) {
     console.log('get tastes for whiskeys from:' + authService.userID)
     this.othersTastesForMyWhiskeyCollection = this.afs.collection('tastes', ref =>
       ref.where('supplier', '==', authService.userID).orderBy('createdAt', 'desc')
@@ -21,6 +30,8 @@ export class WhiskeyTasteService {
     this.myWhiskeysToTasteCollection = this.afs.collection('tastes', ref =>
       ref.where('taster', '==', authService.userID).orderBy('createdAt', 'desc')
     )
+
+    console.log('connected to ethereum network:' + contractsService.checkNetwork())
   }
   getMyWhiskeysToTasteCollection(): Observable<any[]> {
     console.log('get whiskeybottle tastes')
@@ -71,126 +82,26 @@ export class WhiskeyTasteService {
   tasteWhiskey(whiskey: any, tasterId: string): Promise<string> {
     //
     return new Promise((resolve, reject) => {
+      this.testTaste()
       console.log('Create contract')
-      /*
-      var taster = this.web3Ser.web3.eth.accounts[0]
-      if (this.web3Ser.checkNetwork()) {
-        resolve('connected')
-      } else {
-        reject('Please connect to correct network')
-      }*/
-      this.createTaste(whiskey, tasterId).then(taste => {
-        console.log('whiske taste craeted: ' + taste.id)
-        resolve(taste.id)
-      })
-    })
-
-    /*abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface)
-        VotingContract = web3.eth.contract(abiDefinition)
-        byteCode = compiledCode.contracts[':Voting'].bytecode
-          // the following line is what you need to do get the address
-        deployedContract = VotingContract.new(['Rama','Nick','Jose'],{data: byteCode, from:
-        web3.eth.accounts[0], gas: 4700000}) 
-        deployedContract.address
-        /contractInstance = VotingContract.at(deployedContract.address)*/
-    /*var newTasteContract = new this.web3Ser.web3.eth.Contract(whiskeyTasteArtifacts, {
-          from: taster, // default from address
-          gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+      //create a exhibition contract instance
+      if (this.contractsService.checkNetwork()) {
+        //var taste = this.contractsService.createContract(this.interface, this.contractDeployedAt)
+        //console.log(taste)
+        this.createTaste(whiskey, tasterId).then(taste => {
+          console.log('whiske taste craeted: ' + taste.id)
+          resolve(taste.id)
         })
-
-        newTasteContract
-          .deploy({
-            arguments: [123, 'My String']
-          })
-          .send(
-            {
-              from: taster,
-              gas: 1500000,
-              gasPrice: '30000000000000'
-            },
-            function(error, transactionHash) {
-              console.log('')
-            }
-          )
-          .on('error', function(error) {
-            console.log('contract error:' + error)
-          })
-          .on('transactionHash', function(transactionHash) {
-            console.log('transaciton hash:' + transactionHash)
-          })
-          .on('receipt', function(receipt) {
-            console.log('receipt.contractAddress:' + receipt.contractAddress) // contains the new contract address
-          })
-          .on('confirmation', function(confirmationNumber, receipt) {
-            console.log('confirmation:' + confirmationNumber)
-          })
-          .then(function(newContractInstance) {
-            console.log('created contract:' + newContractInstance.options.address) // instance with the new contract address
-            console.log('created contract object:' + newContractInstance)
-            resolve(newContractInstance.options.address)
-          })
-          */
+      } else {
+        console.log('connected to wrong network')
+      }
+    })
+  }
+  private async testTaste() {
+    var contract = new this.contractsService.web3.eth.Contract(
+      JSON.parse(this.interface), // contract interface
+      this.contractDeployedAt // address where contract is deployed
+    )
+    console.log('contract:' + contract)
   }
 }
-/*let meta
-    return Observable.create(observer => {
-      this.WhiskeyTaste.deployed()
-        .then(instance => {
-          meta = instance
-          return meta.sendCoin(to, amount, {
-            from: from
-          })
-        })
-        .then(() => {
-          observer.next()
-          observer.next()
-        })
-        .catch(e => {
-          console.log(e)
-          observer.error(e)
-        })
-    })*/
-//}
-/*getBalance(account): Observable<number> {
-    let meta
-
-    return Observable.create(observer => {
-      this.WhiskeyTaste.deployed()
-        .then(instance => {
-          meta = instance
-          //we use call here so the call doesn't try and write, making it free
-          return meta.getBalance.call(account, {
-            from: account
-          })
-        })
-        .then(value => {
-          observer.next(value)
-          observer.complete()
-        })
-        .catch(e => {
-          console.log(e)
-          observer.error(e)
-        })
-    })
-  }
-*/
-/*tasteWhiskey(from, to, amount): string {
-    let meta
-    return Observable.create(observer => {
-      this.WhiskeyTaste.deployed()
-        .then(instance => {
-          meta = instance
-          return meta.sendCoin(to, amount, {
-            from: from
-          })
-        })
-        .then(() => {
-          observer.next()
-          observer.next()
-        })
-        .catch(e => {
-          console.log(e)
-          observer.error(e)
-        })
-    })
-  }*/

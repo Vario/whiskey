@@ -15,7 +15,16 @@ run in terminal
 8.  Account with ETH should be visible now
 
 Option 2 with Rinkeby Testnet
-1. goto https://faucet.rinkeby.io/
-2. post adress as tweet and paste tweet link into input field
-3. wait until ether is funed
 
+1.  goto https://faucet.rinkeby.io/
+2.  post adress as tweet and paste tweet link into input field
+3.  wait until ether is funed
+
+## Contract Deployment
+
+https://medium.com/@mail.bahurudeen/create-compile-and-deploy-smart-contracts-on-ethereum-blockchain-network-and-interacting-with-it-cb40d9596525
+
+## Bugs
+
+1.  Failed to publish contract solution
+    https://stackoverflow.com/questions/50201353/unhandledpromiserejectionwarning-error-the-contract-code-couldnt-be-stored-p
