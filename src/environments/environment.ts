@@ -17,7 +17,7 @@ export const environment = {
     messagingSenderId: '960794625142'
   },
   blockchain: {
-    network: 4, //rinkeby
+    network: 4, //rinkeby testnet
     contractAdress: '0xbc84f3bf7dd607a37f9e5848a6333e6c188d926c'
   }
 }

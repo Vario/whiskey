@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component,ViewEncapsulation } from '@angular/core'
 import { animate, state, style, transition, trigger } from '@angular/animations'
 import { WhiskeyTasteService } from '../../shared/services/whiskeytaste.service'
 import { AuthService } from '../../shared/services/auth.service'
@@ -17,7 +17,7 @@ import { Observable } from 'rxjs'
       state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])
-  ]
+  ],encapsulation : ViewEncapsulation.None
 })
 export class WhiskeyTasteListComponent {
   constructor(private whiskeyTasteService: WhiskeyTasteService, private authService: AuthService) {}

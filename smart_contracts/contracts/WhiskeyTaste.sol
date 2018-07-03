@@ -9,17 +9,14 @@ contract WhiskeyTaste {
     string whiskeyID;
     uint price;
 
-	function WhiskeyTaste() public {
+	function WhiskeyTaste(address supplierid, string whiskeyid, uint priceValue) public {
         creator = msg.sender;
-    }
-
-    function tasteWhiskey(address supplierid, string whiskeyid, uint priceValue) public {
         supplier = supplierid;
         whiskeyID = whiskeyid;
         price = priceValue;
         taster = msg.sender;
     }
-
+    
     //Method to be called from supplier that whiskey has been paid and so contract is fullfilled
     function whiskeyTastePaid() public {
         if (msg.sender == supplier) {

@@ -31,8 +31,11 @@ export class ContractsService {
       )
 
       // Use Mist/MetaMask's provider
+      console.log('current provider: ' + window.web3.currentProvider)
       this.web3 = new Web3(window.web3.currentProvider)
+
       this.accounts = await this.web3.eth.getAccounts()
+      console.log('accounts: ' + this.accounts)
     } else {
       console.warn(
         "No web3 detected. Falling back to ${environment.HttpProvider}. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask"
@@ -42,15 +45,21 @@ export class ContractsService {
     }
   }
 
-  checkNetwork(): boolean {
+  /*checkNetwork(): Promise<boolean> {
     //TODO check network here?
+    console.log('current network: ' + this.web3.version.network)
+
+    this.web3.eth.net.getId().then(networkId => console.log('network:' + networkId))
+
     if (this.web3.version.network == environment.blockchain.network) {
-      return true
+      console.log('connected to network:' + environment.blockchain.network)
+      //return true
     } else {
       console.log('Please connect to the Rinkeby network')
-      return false
+      //return false
     }
-  }
+  }*/
+
   getAccounts(): Observable<any> {
     return Observable.create(observer => {
       this.web3.eth.getAccounts((err, accs) => {
@@ -68,84 +77,59 @@ export class ContractsService {
     })
   }
 
-  createContract(int: any, contractDeployedAt: string) {
-    return new this.web3.eth.Contract(
-      JSON.parse(int), // contract interface
-      contractDeployedAt // address where contract is deployed
-    )
-  }
-  /*
-  Observe account variable if it is changed in metamask
-  Observable.timer(0, 1000).subscribe(() => { 
-    if(this._currentAccount != web3.eth.accounts[0]) { 
-    doUpdate();
-    }
-   }
-*/
-  /*
-  private _account: string = null
-  private _web3: any
-
-  private _tokenContract: any
-  //adress of smart contract
-  private _tokenContractAddress: string = environment.blockchain.contractAdress
-
-  constructor() {
-    if (typeof window.web3 !== 'undefined') {
-      // Use Mist/MetaMask's provider
-      this._web3 = new Web3(window.web3.currentProvider)
-
-      //TODO check network here?
-      if (this._web3.version.network !== environment.blockchain.networks.rinkeby) {
-        alert('Please connect to the Rinkeby network')
-      }
-    } else {
-      console.warn('Please use a dapp browser like mist or MetaMask plugin for chrome')
-    }
-
-    this._tokenContract = this._web3.eth.contract(tokenAbi).at(this._tokenContractAddress)
-  }
-*/
-  /*
-  Method to get accout for balance etc..
-   */
-  /*
-  private async getAccount(): Promise<string> {
-    if (this._account == null) {
-      this._account = (await new Promise((resolve, reject) => {
-        this._web3.eth.getAccounts((err, accs) => {
-          if (err != null) {
-            alert('There was an error fetching your accounts.')
-            return
-          }
-
-          if (accs.length === 0) {
-            alert("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.")
-            return
-          }
-          resolve(accs[0])
-        })
-      })) as string
-
-      this._web3.eth.defaultAccount = this._account
-    }
-
-    return Promise.resolve(this._account)
-  }
-
-  public async getUserBalance(): Promise<number> {
-    let account = await this.getAccount()
-
+  createContract(contractInterface: any, bytecode: any, parameters: Array<any>): Promise<string> {
     return new Promise((resolve, reject) => {
-      let _web3 = this._web3
-      this._tokenContract.balanceOf.call(account, function(err, result) {
-        if (err != null) {
-          reject(err)
+      console.log('create taste in blockchain')
+      this.web3.eth.net.getId().then(networkId => {
+        if (networkId != environment.blockchain.network) {
+          reject('wrong network connected')
+        } else {
+          console.log('connected to correct network')
+          //Continue
+          console.log('create contract for: ' + contractInterface)
+          /*
+          Get contract object for specific contract adress
+          let contract = new this.web3.eth.Contract(
+            contractInterface, // contract interface
+            contractDeployedAt // address where contract is deployed
+          )
+          */
+          this.deployContract(contractInterface, bytecode, parameters)
+            .then(contractID => {
+              resolve(contractID)
+            })
+            .catch(error => {
+              reject(error)
+            })
         }
-
-        resolve(_web3.fromWei(result))
       })
-    }) as Promise<number>
+    }) as Promise<string>
   }
-  */
+  private deployContract(contractInterface: any, bytecode: any, parameters: Array<any>): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.web3.eth
+        .getAccounts()
+        .then(accounts => {
+          console.log('creating contract in blockchain for: ' + accounts[0])
+          new this.web3.eth.Contract(contractInterface)
+            .deploy({
+              data: bytecode,
+              arguments: parameters
+            })
+            .send({ from: accounts[0], gas: '1000000' })
+            .then(result => {
+              console.log('contract deployed to' + result.options.address)
+              resolve(result.options.address)
+            })
+            .catch(error => {
+              console.log('error creating contract in blockchain:' + error)
+              reject(error)
+            }) // 0.01 cent
+        })
+        .catch(error => {
+          console.log('error getting blockchain account: ' + error)
+          reject(error)
+        })
+    }) as Promise<string>
+  }
 }

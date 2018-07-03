@@ -1,4 +1,4 @@
-export interface WhiskeyTaste {
+export interface WhiskeyBottleTaste {
   id: string
   whiskey: string
   taster: number

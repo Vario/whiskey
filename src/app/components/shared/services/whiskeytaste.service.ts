@@ -13,6 +13,7 @@ export class WhiskeyTasteService {
   myWhiskeysToTasteCollection: AngularFirestoreCollection<any>
   private contractDeployedAt: '0xEc3c889F6190c78E5497e2C64F82ea72db80F054'
   private interface = (<any>whiskeyTasteArtifact).interface
+  private bytecode = (<any>whiskeyTasteArtifact).bytecode
   private accounts: string[]
   private tastes: any[]
 
@@ -30,8 +31,6 @@ export class WhiskeyTasteService {
     this.myWhiskeysToTasteCollection = this.afs.collection('tastes', ref =>
       ref.where('taster', '==', authService.userID).orderBy('createdAt', 'desc')
     )
-
-    console.log('connected to ethereum network:' + contractsService.checkNetwork())
   }
   getMyWhiskeysToTasteCollection(): Observable<any[]> {
     console.log('get whiskeybottle tastes')
@@ -66,7 +65,7 @@ export class WhiskeyTasteService {
     console.log('set as paid for ' + data.id)
     this.getWhiskeyTaste(data.id).update({ paid: true })
   }
-  private createTaste(whiskey: any, tasterID: string) {
+  private createTaste(whiskey: any, tasterID: string, contractID: string) {
     console.log('new taste for whiskey: ' + whiskey.whiskeyId + ' from ' + tasterID)
     const t = {
       whiskeyId: whiskey.id,
@@ -74,7 +73,7 @@ export class WhiskeyTasteService {
       supplier: whiskey.ownerid,
       price: whiskey.price,
       paid: false,
-      contractId: '',
+      contractId: contractID,
       createdAt: new Date().getTime()
     }
     return this.myWhiskeysToTasteCollection.add(t)
@@ -82,26 +81,20 @@ export class WhiskeyTasteService {
   tasteWhiskey(whiskey: any, tasterId: string): Promise<string> {
     //
     return new Promise((resolve, reject) => {
-      this.testTaste()
-      console.log('Create contract')
-      //create a exhibition contract instance
-      if (this.contractsService.checkNetwork()) {
-        //var taste = this.contractsService.createContract(this.interface, this.contractDeployedAt)
-        //console.log(taste)
-        this.createTaste(whiskey, tasterId).then(taste => {
-          console.log('whiske taste craeted: ' + taste.id)
-          resolve(taste.id)
+      console.log(whiskey)
+      this.contractsService
+        .createContract(JSON.parse(this.interface), this.bytecode, [whiskey.owner, whiskey.id, whiskey.price])
+        .then(contractAddress => {
+          console.log('contract created on blockchain')
+          this.createTaste(whiskey, tasterId, contractAddress).then(taste => {
+            console.log('whiskey taste created: ' + taste.id)
+            resolve(taste.id)
+          })
         })
-      } else {
-        console.log('connected to wrong network')
-      }
+        .catch(error => {
+          console.log(error)
+          reject(error)
+        })
     })
-  }
-  private async testTaste() {
-    var contract = new this.contractsService.web3.eth.Contract(
-      JSON.parse(this.interface), // contract interface
-      this.contractDeployedAt // address where contract is deployed
-    )
-    console.log('contract:' + contract)
   }
 }

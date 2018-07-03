@@ -28,3 +28,6 @@ https://medium.com/@mail.bahurudeen/create-compile-and-deploy-smart-contracts-on
 
 1.  Failed to publish contract solution
     https://stackoverflow.com/questions/50201353/unhandledpromiserejectionwarning-error-the-contract-code-couldnt-be-stored-p
+
+2. web3 with angular 6
+https://gist.github.com/niespodd/1fa82da6f8c901d1c33d2fcbb762947d

@@ -13,6 +13,7 @@ import {
   MatSidenavModule,
   MatNativeDateModule,
   MatCardModule,
+  MatTableModule,
   MatTabsModule,
   MatIconModule
 } from '@angular/material'
@@ -88,6 +89,7 @@ import { environment } from '../environments/environment'
     MatSidenavModule,
     MatNativeDateModule,
     MatCardModule,
+    MatTableModule,
     MatTabsModule,
     MatIconModule,
     FormsModule,
