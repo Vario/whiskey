@@ -12,6 +12,7 @@
                             <th>Supplier</th>
                             <th>Price (€)</th>
                             <th>Date</th>
+                            <th>Paid</th>
                         </thead>
                         <tr *ngFor="let taste of myWhiskeyTastes$ | async">
                             <td>{{taste.whiskeyId}}</td>
@@ -20,7 +21,7 @@
                             <td>{{taste.createdAt | date: 'dd.MM.yyyy HH:MM'}}</td>
                             <td>
                                 <div *ngIf="!taste.paid">
-                                    <mat-icon>check_box_outline_blank</mat-icon>>
+                                    <mat-icon>check_box_outline_blank</mat-icon>
                                 </div>
                                 <div *ngIf="taste.paid">
                                     <mat-icon>check_circle</mat-icon>

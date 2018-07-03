@@ -45,21 +45,6 @@ export class ContractsService {
     }
   }
 
-  /*checkNetwork(): Promise<boolean> {
-    //TODO check network here?
-    console.log('current network: ' + this.web3.version.network)
-
-    this.web3.eth.net.getId().then(networkId => console.log('network:' + networkId))
-
-    if (this.web3.version.network == environment.blockchain.network) {
-      console.log('connected to network:' + environment.blockchain.network)
-      //return true
-    } else {
-      console.log('Please connect to the Rinkeby network')
-      //return false
-    }
-  }*/
-
   getAccounts(): Observable<any> {
     return Observable.create(observer => {
       this.web3.eth.getAccounts((err, accs) => {
@@ -103,6 +88,31 @@ export class ContractsService {
             })
         }
       })
+    }) as Promise<string>
+  }
+  getContract(contractInterface: any, contractDeployedAt: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.web3.eth.net
+        .getId()
+        .then(networkId => {
+          if (networkId != environment.blockchain.network) {
+            reject('wrong network connected')
+          } else {
+            console.log('connected to correct network')
+            //Continue
+            console.log('create contract for: ' + contractInterface)
+            let contract = new this.web3.eth.Contract(
+              contractInterface, // contract interface
+              contractDeployedAt // address where contract is deployed
+            )
+            console.log(contract)
+            resolve(contract)
+          }
+        })
+        .catch(error => {
+          console.log('error checking blockchain: ' + error)
+          reject(error)
+        })
     }) as Promise<string>
   }
   private deployContract(contractInterface: any, bytecode: any, parameters: Array<any>): Promise<string> {
