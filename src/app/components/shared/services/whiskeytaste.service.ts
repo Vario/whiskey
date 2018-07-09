@@ -73,14 +73,19 @@ export class WhiskeyTasteService {
         .getContract(JSON.parse(this.interface), data.contractId)
         .then(contract => {
           console.log(contract)
-          let accounts = this.contractsService.getAccounts()
-          console.log('update contract in blockchain for: ' + accounts[0])
-          contract.methods.whiskeyTastePaid().call({ from: accounts[0], gas: '1000000' }, function(error, result) {
-            console.log('contract method called')
-            console.log(error)
-            console.log(result)
-            taste.update({ paid: true })
-          })
+          let acc = this.contractsService.getAccounts().subscribe(accounts => {
+            console.log('update contract in blockchain for: ')
+            console.log(accounts)
+            contract.methods.whiskeyTastePaid().send({ from: accounts[0], gas: '1000000' }, function(error, result) {
+              console.log('contract method called')
+              if (error){
+                console.log(error)
+              }
+              else if(result)
+                taste.update({ paid: true })
+              console.log(result)
+            })
+          });
         })
         .catch(error => {
           this.alertService.showToaster('Error setting whiskey taste ' + data.id + ' as paid on blockchain')
@@ -102,6 +107,7 @@ export class WhiskeyTasteService {
     }
     return this.myWhiskeysToTasteCollection.add(t)
   }
+
   tasteWhiskey(whiskey: any, tasterId: string): Promise<string> {
     //
     return new Promise((resolve, reject) => {
@@ -110,6 +116,7 @@ export class WhiskeyTasteService {
         .createContract(JSON.parse(this.interface), this.bytecode, [whiskey.owner, whiskey.id, whiskey.price])
         .then(contractAddress => {
           console.log('contract created on blockchain')
+          console.log('Owner:' + whiskey.owner)
           this.createTaste(whiskey, tasterId, contractAddress).then(taste => {
             console.log('whiskey taste created: ' + taste.id)
             this.alertService.showToaster('Whiskey taste Created for whiskey ' + whiskey.whiskeyId)

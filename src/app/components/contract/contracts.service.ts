@@ -33,6 +33,7 @@ export class ContractsService {
       // Use Mist/MetaMask's provider
       console.log('current provider: ' + window.web3.currentProvider)
       this.web3 = new Web3(window.web3.currentProvider)
+      console.log(window.web3.currentProvider)
 
       this.accounts = await this.web3.eth.getAccounts()
       console.log('accounts: ' + this.accounts)
@@ -56,6 +57,7 @@ export class ContractsService {
           observer.error("Couldn't get any accounts! Make sure your Ethereum client is configured correctly.")
         }
 
+        console.log("Accounts: " + accs)
         observer.next(accs)
         observer.complete()
       })
@@ -90,6 +92,7 @@ export class ContractsService {
       })
     }) as Promise<string>
   }
+
   getContract(contractInterface: any, contractDeployedAt: string): Promise<any> {
     return new Promise((resolve, reject) => {
       this.web3.eth.net
@@ -115,6 +118,7 @@ export class ContractsService {
         })
     }) as Promise<string>
   }
+
   private deployContract(contractInterface: any, bytecode: any, parameters: Array<any>): Promise<string> {
     return new Promise((resolve, reject) => {
       this.web3.eth
