@@ -13,23 +13,24 @@ const solc = require('solc')
 const buildPath = path.resolve(__dirname, 'build')
 fs.removeSync(buildPath)
 
-// It returns exhibition.sol path
+// It returns WhiskeyTaste.sol path
 const contractPath = path.resolve(__dirname, 'contracts', 'WhiskeyTaste.sol')
 
-// Get the content of exhibition.sol
-const exhibitionSource = fs.readFileSync(contractPath, 'utf8')
+// Get the content of WhiskeyTaste.sol
+const contractSource = fs.readFileSync(contractPath, 'utf8')
 
-// This code compile the exhibition contract code and return the contracts object
-const output = solc.compile(exhibitionSource, 1).contracts
+// This code compile the contract code and return the contracts object
+const output = solc.compile(contractSource, 1).contracts
 
 // Ensures that the directory 'Build' exists. If the directory structure does not exist, it is created.
 fs.ensureDirSync(buildPath)
 
-// Create a JSON file with exhibition contract. It will be used to create contract instance from Angular application.
+// Create a JSON file with contract. It will be used to create contract instance from Angular application.
 fs.outputJsonSync(
   path.resolve(buildPath, 'whiskeytaste.json'),
   output[':WhiskeyTaste']
 )
 
-// Export exhibition contract
+// Export contract
 module.exports = output[':WhiskeyTaste']
+

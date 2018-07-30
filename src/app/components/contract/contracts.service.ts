@@ -19,15 +19,18 @@ export class ContractsService {
   private accounts: string[]
 
   constructor() {
-    this.checkAndInstantiateWeb3()
+    this.instantiateWeb3()
   }
 
-  private async checkAndInstantiateWeb3() {
+  private async instantiateWeb3() {
     console.log('check ethereum network state')
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (typeof window.web3 !== 'undefined') {
       console.warn(
-        "Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask"
+        "Using web3 detected from external source. " +
+        "If you find that your accounts don't appear or you have 0 MetaCoin, " +
+        "ensure you've configured that source properly. If using MetaMask, see the following link. " +
+        "Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask"
       )
 
       // Use Mist/MetaMask's provider
@@ -39,7 +42,9 @@ export class ContractsService {
       console.log('accounts: ' + this.accounts)
     } else {
       console.warn(
-        "No web3 detected. Falling back to ${environment.HttpProvider}. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask"
+        "No web3 detected. Falling back to ${environment.HttpProvider}. " +
+        "You should remove this fallback when you deploy live, as it's inherently insecure. " +
+        "Consider switching to Metamask for development."
       )
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
       this.web3 = new Web3(new Web3.providers.HttpProvider(environment.HttpProvider))
@@ -74,13 +79,6 @@ export class ContractsService {
           console.log('connected to correct network')
           //Continue
           console.log('create contract for: ' + contractInterface)
-          /*
-          Get contract object for specific contract adress
-          let contract = new this.web3.eth.Contract(
-            contractInterface, // contract interface
-            contractDeployedAt // address where contract is deployed
-          )
-          */
           this.deployContract(contractInterface, bytecode, parameters)
             .then(contractID => {
               resolve(contractID)
